@@ -6,7 +6,16 @@ Some useful libraries, scripts, etc related to telegram
 
 A simple telegram bot library,
 
-Example usage:
+Usage:
+
+1. add `require_once("botlib.php");` to your file
+
+2. make your new bot with `$bot = new botlib("APIKEY");` - APIKEY : bot's token
+
+3. use telegram's methods with a simple call of your bot:
+`$bot->method(data);` - method : name of the method , data : parameters (you should insert from botlib's doc)
+
+Example:
 ```
 <?php
 
