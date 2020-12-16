@@ -30,8 +30,8 @@ functions = ""
 
 # Checking every single method in this `for` loop
 for method in methods:
-    # Skipping two annoying methods
-    if method == "Making requests when getting updates" or method == "getWebhookInfo":
+    # Skipping a none method
+    if method == "Making requests when getting updates":
         continue
     # Extracting method's description to `des`
     des = str(re.findall(method+"</h4>\n<p>(.*)</p>",t)[0])

@@ -54,6 +54,11 @@ class botlib {
 		]);
 	}
 
+	# Use this method to get current webhook status. Requires no parameters. Onsuccess, returns a WebhookInfo object. If the bot is using getUpdates, willreturn an object with the _url_ field empty.
+	public function getWebhookInfo () {
+		return $this->bot('getWebhookInfo');
+	}
+
 	# A simple method for testing your bot's auth token. Requires no parameters.Returns basic information about the bot in form of a User object.
 	public function getMe () {
 		return $this->bot('getMe');
