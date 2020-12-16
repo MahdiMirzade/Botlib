@@ -39,7 +39,7 @@ for method in methods:
     des = des.replace("\n","")
     # Check if there is any paramteres for our method, 
     # if there wasn't, then it will make an empty function for method
-    chk = re.findall(method+"</h4>\n<p>.*</p>\n<table class=\"table\">\n",t)
+    chk = re.findall(method+"</h4>\n<p>.*</p>\n<table class=\"table\">\n|"+method+"</h4>\n.*\n<blockquote>\n.*\n</blockquote>\n<table class=\"table\">\n",t)
     if not chk:
         func = "\t# " + des + "\n\tpublic function " + method + " () {\n"
         functions = functions + func + "\t\treturn $this->bot('" + method + "');\n\t}\n\n"

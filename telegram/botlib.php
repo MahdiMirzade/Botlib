@@ -541,8 +541,14 @@ class botlib {
 	}
 
 	# Use this method to send answers to callback queries sent from [inlinekeyboards](/bots#inline-keyboards-and-on-the-fly-updating). The answer will bedisplayed to the user as a notification at the top of the chat screen or as analert. On success, _True_ is returned.
-	public function answerCallbackQuery () {
-		return $this->bot('answerCallbackQuery');
+	public function answerCallbackQuery ($callback_query_id, $text=null, $show_alert=null, $url=null, $cache_time=null) {
+		return $this->bot('answerCallbackQuery', [
+			'callback_query_id' => $callback_query_id,
+			'text' => $text,
+			'show_alert' => $show_alert,
+			'url' => $url,
+			'cache_time' => $cache_time,
+		]);
 	}
 
 	# Use this method to change the list of the bot's commands. Returns _True_ onsuccess.
@@ -787,8 +793,13 @@ class botlib {
 	}
 
 	# Use this method to get data for high score tables. Will return the score ofthe specified user and several of their neighbors in a game. On success,returns an _Array_ of GameHighScore objects.
-	public function getGameHighScores () {
-		return $this->bot('getGameHighScores');
+	public function getGameHighScores ($user_id, $chat_id=null, $message_id=null, $inline_message_id=null) {
+		return $this->bot('getGameHighScores', [
+			'user_id' => $user_id,
+			'chat_id' => $chat_id,
+			'message_id' => $message_id,
+			'inline_message_id' => $inline_message_id,
+		]);
 	}
 
 }
