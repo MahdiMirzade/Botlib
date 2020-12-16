@@ -6,7 +6,7 @@ Some useful libraries, scripts, etc related to telegram
 
 A simple telegram bot library,
 
-Usage:
+**Usage:**
 
 1. add `require_once("botlib.php");` to your file
 
@@ -16,7 +16,7 @@ Usage:
 
 `$bot->method(data);` - method : name of the method , data : parameters
 
-Example:
+**Example:**
 ```
 <?php
 
@@ -26,3 +26,7 @@ $bot = new botlib("14335...:AAGXqkM...");
 
 $bot->sendMessage(821349528,"This is a test from botlib 👋");
 ```
+
+**Code Examples:**
+
+* filetourl : Send files and recieve direct links [source code](examples/filetourl.php)
