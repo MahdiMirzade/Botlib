@@ -43,15 +43,8 @@ class botlib {
 	}
 
 	# Use this method to specify a url and receive incoming updates via an outgoingwebhook. Whenever there is an update for the bot, we will send an HTTPS POSTrequest to the specified url, containing a JSON-serialized Update. In case ofan unsuccessful request, we will give up after a reasonable amount ofattempts. Returns _True_ on success.
-	public function setWebhook ($url, $certificate=null, $ip_address=null, $max_connections=null, $allowed_updates=null, $drop_pending_updates=null) {
-		return $this->bot('setWebhook', [
-			'url' => $url,
-			'certificate' => $certificate,
-			'ip_address' => $ip_address,
-			'max_connections' => $max_connections,
-			'allowed_updates' => $allowed_updates,
-			'drop_pending_updates' => $drop_pending_updates,
-		]);
+	public function setWebhook () {
+		return $this->bot('setWebhook');
 	}
 
 	# Use this method to remove webhook integration if you decide to switch back togetUpdates. Returns _True_ on success.
@@ -62,48 +55,18 @@ class botlib {
 	}
 
 	# A simple method for testing your bot's auth token. Requires no parameters.Returns basic information about the bot in form of a User object.
-	public function getMe ($chat_id, $text, $parse_mode=null, $entities=null, $disable_web_page_preview=null, $disable_notification=null, $reply_to_message_id=null, $allow_sending_without_reply=null, $reply_markup=null) {
-		return $this->bot('getMe', [
-			'chat_id' => $chat_id,
-			'text' => $text,
-			'parse_mode' => $parse_mode,
-			'entities' => $entities,
-			'disable_web_page_preview' => $disable_web_page_preview,
-			'disable_notification' => $disable_notification,
-			'reply_to_message_id' => $reply_to_message_id,
-			'allow_sending_without_reply' => $allow_sending_without_reply,
-			'reply_markup' => $reply_markup,
-		]);
+	public function getMe () {
+		return $this->bot('getMe');
 	}
 
 	# Use this method to log out from the cloud Bot API server before launching thebot locally. You **must** log out the bot before running it locally, otherwisethere is no guarantee that the bot will receive updates. After a successfulcall, you can immediately log in on a local server, but will not be able tolog in back to the cloud Bot API server for 10 minutes. Returns _True_ onsuccess. Requires no parameters.
-	public function logOut ($chat_id, $text, $parse_mode=null, $entities=null, $disable_web_page_preview=null, $disable_notification=null, $reply_to_message_id=null, $allow_sending_without_reply=null, $reply_markup=null) {
-		return $this->bot('logOut', [
-			'chat_id' => $chat_id,
-			'text' => $text,
-			'parse_mode' => $parse_mode,
-			'entities' => $entities,
-			'disable_web_page_preview' => $disable_web_page_preview,
-			'disable_notification' => $disable_notification,
-			'reply_to_message_id' => $reply_to_message_id,
-			'allow_sending_without_reply' => $allow_sending_without_reply,
-			'reply_markup' => $reply_markup,
-		]);
+	public function logOut () {
+		return $this->bot('logOut');
 	}
 
 	# Use this method to close the bot instance before moving it from one localserver to another. You need to delete the webhook before calling this methodto ensure that the bot isn't launched again after server restart. The methodwill return error 429 in the first 10 minutes after the bot is launched.Returns _True_ on success. Requires no parameters.
-	public function close ($chat_id, $text, $parse_mode=null, $entities=null, $disable_web_page_preview=null, $disable_notification=null, $reply_to_message_id=null, $allow_sending_without_reply=null, $reply_markup=null) {
-		return $this->bot('close', [
-			'chat_id' => $chat_id,
-			'text' => $text,
-			'parse_mode' => $parse_mode,
-			'entities' => $entities,
-			'disable_web_page_preview' => $disable_web_page_preview,
-			'disable_notification' => $disable_notification,
-			'reply_to_message_id' => $reply_to_message_id,
-			'allow_sending_without_reply' => $allow_sending_without_reply,
-			'reply_markup' => $reply_markup,
-		]);
+	public function close () {
+		return $this->bot('close');
 	}
 
 	# Use this method to send text messages. On success, the sent Message isreturned.
@@ -163,22 +126,8 @@ class botlib {
 	}
 
 	# Use this method to send audio files, if you want Telegram clients to displaythem in the music player. Your audio must be in the .MP3 or .M4A format. Onsuccess, the sent Message is returned. Bots can currently send audio files ofup to 50 MB in size, this limit may be changed in the future.
-	public function sendAudio ($chat_id, $audio, $caption=null, $parse_mode=null, $caption_entities=null, $duration=null, $performer=null, $title=null, $thumb=null, $disable_notification=null, $reply_to_message_id=null, $allow_sending_without_reply=null, $reply_markup=null) {
-		return $this->bot('sendAudio', [
-			'chat_id' => $chat_id,
-			'audio' => $audio,
-			'caption' => $caption,
-			'parse_mode' => $parse_mode,
-			'caption_entities' => $caption_entities,
-			'duration' => $duration,
-			'performer' => $performer,
-			'title' => $title,
-			'thumb' => $thumb,
-			'disable_notification' => $disable_notification,
-			'reply_to_message_id' => $reply_to_message_id,
-			'allow_sending_without_reply' => $allow_sending_without_reply,
-			'reply_markup' => $reply_markup,
-		]);
+	public function sendAudio () {
+		return $this->bot('sendAudio');
 	}
 
 	# Use this method to send general files. On success, the sent Message isreturned. Bots can currently send files of any type of up to 50 MB in size,this limit may be changed in the future.
@@ -391,11 +340,8 @@ class botlib {
 	}
 
 	# Use this method when you need to tell the user that something is happening onthe bot's side. The status is set for 5 seconds or less (when a messagearrives from your bot, Telegram clients clear its typing status). Returns_True_ on success.
-	public function sendChatAction ($chat_id, $action) {
-		return $this->bot('sendChatAction', [
-			'chat_id' => $chat_id,
-			'action' => $action,
-		]);
+	public function sendChatAction () {
+		return $this->bot('sendChatAction');
 	}
 
 	# Use this method to get a list of profile pictures for a user. Returns aUserProfilePhotos object.
@@ -590,14 +536,8 @@ class botlib {
 	}
 
 	# Use this method to send answers to callback queries sent from [inlinekeyboards](/bots#inline-keyboards-and-on-the-fly-updating). The answer will bedisplayed to the user as a notification at the top of the chat screen or as analert. On success, _True_ is returned.
-	public function answerCallbackQuery ($callback_query_id, $text=null, $show_alert=null, $url=null, $cache_time=null) {
-		return $this->bot('answerCallbackQuery', [
-			'callback_query_id' => $callback_query_id,
-			'text' => $text,
-			'show_alert' => $show_alert,
-			'url' => $url,
-			'cache_time' => $cache_time,
-		]);
+	public function answerCallbackQuery () {
+		return $this->bot('answerCallbackQuery');
 	}
 
 	# Use this method to change the list of the bot's commands. Returns _True_ onsuccess.
@@ -608,17 +548,8 @@ class botlib {
 	}
 
 	# Use this method to get the current list of the bot's commands. Requires noparameters. Returns Array of BotCommand on success.
-	public function getMyCommands ($chat_id=null, $message_id=null, $inline_message_id=null, $text, $parse_mode=null, $entities=null, $disable_web_page_preview=null, $reply_markup=null) {
-		return $this->bot('getMyCommands', [
-			'chat_id' => $chat_id,
-			'message_id' => $message_id,
-			'inline_message_id' => $inline_message_id,
-			'text' => $text,
-			'parse_mode' => $parse_mode,
-			'entities' => $entities,
-			'disable_web_page_preview' => $disable_web_page_preview,
-			'reply_markup' => $reply_markup,
-		]);
+	public function getMyCommands () {
+		return $this->bot('getMyCommands');
 	}
 
 	# Use this method to edit text and game messages. On success, if the editedmessage is not an inline message, the edited Message is returned, otherwise_True_ is returned.
@@ -851,13 +782,8 @@ class botlib {
 	}
 
 	# Use this method to get data for high score tables. Will return the score ofthe specified user and several of their neighbors in a game. On success,returns an _Array_ of GameHighScore objects.
-	public function getGameHighScores ($user_id, $chat_id=null, $message_id=null, $inline_message_id=null) {
-		return $this->bot('getGameHighScores', [
-			'user_id' => $user_id,
-			'chat_id' => $chat_id,
-			'message_id' => $message_id,
-			'inline_message_id' => $inline_message_id,
-		]);
+	public function getGameHighScores () {
+		return $this->bot('getGameHighScores');
 	}
 
 }
