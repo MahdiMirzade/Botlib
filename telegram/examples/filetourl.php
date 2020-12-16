@@ -38,6 +38,8 @@ if($update->callback_query){
 
 # Connecting your mysql server
 $sql = new mysqli("[*[*SERVER*]*]","[*[*USERNAME*]*]","[*[*PASSWORD*]*]","[*[*DATABASE*]*]");
+$sql->query("CREATE TABLE IF NOT EXISTS usrs ( id INT NOT NULL, dt INT NOT NULL, step TEXT NULL, PRIMARY KEY ( id ) )");
+$sql->query("CREATE TABLE IF NOT EXISTS urls ( id INT NOT NULL, ln TEXT NOT NULL, cr INT NOT NULL, dt INT NOT NULL, md INT NOT NULL, dl TEXT NOT NULL, PRIMARY KEY ( id ) )");
 
 # Handling user's data from mysql DB
 $usrd = $sql->query("SELECT * FROM `usrs` WHERE `id` = $from_id")->fetch_assoc();
