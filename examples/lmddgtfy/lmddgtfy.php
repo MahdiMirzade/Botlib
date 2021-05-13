@@ -36,10 +36,29 @@ if($update->callback_query){
     $data = $update->callback_query->data;
 }
 
+$language = [
+    "English" => [
+        "start_txt" => "👋 Hello ",
+        "404" => "<b>404 Not Found</b>",
+    ],
+    "Persian" => [
+        "start_txt" => "👋 درود ",
+        "404" => "<b>۴۰۴ یافت نشد</b>",
+    ],
+];
+
+$defaultLang = "English";
+
+function lang ($term, $lang=null) {
+    global $defaultLang, $language;
+    if ($lang)
+        $defaultLang = $lang;
+    return $language[$defaultLang][$term];
+}
+
 # Connecting your mysql server
 $sql = new mysqli("[*[*SERVER*]*]","[*[*USERNAME*]*]","[*[*PASSWORD*]*]","[*[*DATABASE*]*]");
 $sql->query("CREATE TABLE IF NOT EXISTS usrs ( id INT NOT NULL, dt INT NOT NULL, step TEXT NULL, PRIMARY KEY ( id ) )");
-$sql->query("CREATE TABLE IF NOT EXISTS urls ( id INT NOT NULL, ln TEXT NOT NULL, cr INT NOT NULL, dt INT NOT NULL, md INT NOT NULL, dl TEXT NOT NULL, PRIMARY KEY ( id ) )");
 
 # Handling user's data from mysql DB
 $usrd = $sql->query("SELECT * FROM `usrs` WHERE `id` = $from_id")->fetch_assoc();
@@ -52,23 +71,5 @@ if(!$usrd)
 $dt = time();
 
 # Handling urls and starts
-if(preg_match("/\/[Ss][Tt][Aa][Rr][Tt](.*)/",$text,$matches)){
-    if($matches[1]){
-        $ln = str_replace(" ","",$matches[1]);
-        $file = $sql->query("SELECT * FROM `urls` WHERE `ln` = '$ln'")->fetch_assoc();
-        if($file)
-            $bot->copymessage($from_id,$file['cr'],$file['md']);
-        else
-            $bot->sendmessage($from_id,"👋 Hi this is file to url bot, welcome.\n\nI'm lucky to say that you can send me everything,\nand get a direct url to share it.");
-    }else
-        $bot->sendmessage($from_id,"👋 Hi this is file to url bot, welcome.\n\nI'm lucky to say that you can send me everything,\nand get a direct url to share it.");
-}
-
-# Saving everything except for texts in the database
-elseif(!$text){
-    $id = $sql->query("SELECT * FROM `urls`")->num_rows;
-    $ln = uniqid();
-    $dl = $from_id.",";
-    $sql->query("INSERT INTO `urls` (`id`,`ln`,`cr`,`dt`,`md`,`dl`) VALUES ($id,'$ln',$from_id,$dt,$message_id,'$dl')");
-    $bot->sendmessage($from_id,"Yay, Now you can share this link:\nt.me/".$usernamebot."?start=".$ln);
-}
+if(preg_match("/\/[Ss][Tt][Aa][Rr][Tt](.*)/",$text,$matches))
+    $bot->sendmessage($from_id,lang("start_txt"),"html",null,true);
