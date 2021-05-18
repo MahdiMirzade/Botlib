@@ -23,6 +23,8 @@ $usernamebot = $bot->getme()->result->username;
 
 # Telegram update handler
 $update = json_decode(file_get_contents('php://input'));
+if(!$update)
+    die("404 Not Found");
 if($update->message){
     $message = $update->message;
     $message_id = $update->message->message_id;
