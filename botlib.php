@@ -89,7 +89,7 @@ class botlib {
 		]);
 	}
 
-	# Use this method to forward messages of any kind. On success, the sent Messageis returned.
+	# Use this method to forward messages of any kind. Service messages can't beforwarded. On success, the sent Message is returned.
 	public function forwardMessage ($chat_id, $from_chat_id, $disable_notification=null, $message_id) {
 		return $this->bot('forwardMessage', [
 			'chat_id' => $chat_id,
@@ -99,7 +99,7 @@ class botlib {
 		]);
 	}
 
-	# Use this method to copy messages of any kind. The method is analogous to themethod forwardMessages, but the copied message doesn't have a link to theoriginal message. Returns the MessageId of the sent message on success.
+	# Use this method to copy messages of any kind. Service messages and invoicemessages can't be copied. The method is analogous to the methodforwardMessage, but the copied message doesn't have a link to the originalmessage. Returns the MessageId of the sent message on success.
 	public function copyMessage ($chat_id, $from_chat_id, $message_id, $caption=null, $parse_mode=null, $caption_entities=null, $disable_notification=null, $reply_to_message_id=null, $allow_sending_without_reply=null, $reply_markup=null) {
 		return $this->bot('copyMessage', [
 			'chat_id' => $chat_id,
@@ -365,12 +365,13 @@ class botlib {
 		]);
 	}
 
-	# Use this method to kick a user from a group, a supergroup or a channel. In thecase of supergroups and channels, the user will not be able to return to thegroup on their own using invite links, etc., unless unbanned first. The botmust be an administrator in the chat for this to work and must have theappropriate admin rights. Returns _True_ on success.
-	public function kickChatMember ($chat_id, $user_id, $until_date=null) {
+	# Use this method to kick a user from a group, a supergroup or a channel. In thecase of supergroups and channels, the user will not be able to return to thechat on their own using invite links, etc., unless unbanned first. The botmust be an administrator in the chat for this to work and must have theappropriate admin rights. Returns _True_ on success.
+	public function kickChatMember ($chat_id, $user_id, $until_date=null, $revoke_messages=null) {
 		return $this->bot('kickChatMember', [
 			'chat_id' => $chat_id,
 			'user_id' => $user_id,
 			'until_date' => $until_date,
+			'revoke_messages' => $revoke_messages,
 		]);
 	}
 
@@ -394,19 +395,21 @@ class botlib {
 	}
 
 	# Use this method to promote or demote a user in a supergroup or a channel. Thebot must be an administrator in the chat for this to work and must have theappropriate admin rights. Pass _False_ for all boolean parameters to demote auser. Returns _True_ on success.
-	public function promoteChatMember ($chat_id, $user_id, $is_anonymous=null, $can_change_info=null, $can_post_messages=null, $can_edit_messages=null, $can_delete_messages=null, $can_invite_users=null, $can_restrict_members=null, $can_pin_messages=null, $can_promote_members=null) {
+	public function promoteChatMember ($chat_id, $user_id, $is_anonymous=null, $can_manage_chat=null, $can_post_messages=null, $can_edit_messages=null, $can_delete_messages=null, $can_manage_voice_chats=null, $can_restrict_members=null, $can_promote_members=null, $can_change_info=null, $can_invite_users=null, $can_pin_messages=null) {
 		return $this->bot('promoteChatMember', [
 			'chat_id' => $chat_id,
 			'user_id' => $user_id,
 			'is_anonymous' => $is_anonymous,
-			'can_change_info' => $can_change_info,
+			'can_manage_chat' => $can_manage_chat,
 			'can_post_messages' => $can_post_messages,
 			'can_edit_messages' => $can_edit_messages,
 			'can_delete_messages' => $can_delete_messages,
-			'can_invite_users' => $can_invite_users,
+			'can_manage_voice_chats' => $can_manage_voice_chats,
 			'can_restrict_members' => $can_restrict_members,
-			'can_pin_messages' => $can_pin_messages,
 			'can_promote_members' => $can_promote_members,
+			'can_change_info' => $can_change_info,
+			'can_invite_users' => $can_invite_users,
+			'can_pin_messages' => $can_pin_messages,
 		]);
 	}
 
@@ -427,10 +430,37 @@ class botlib {
 		]);
 	}
 
-	# Use this method to generate a new invite link for a chat; any previouslygenerated link is revoked. The bot must be an administrator in the chat forthis to work and must have the appropriate admin rights. Returns the newinvite link as _String_ on success.
+	# Use this method to generate a new primary invite link for a chat; anypreviously generated primary link is revoked. The bot must be an administratorin the chat for this to work and must have the appropriate admin rights.Returns the new invite link as _String_ on success.
 	public function exportChatInviteLink ($chat_id) {
 		return $this->bot('exportChatInviteLink', [
 			'chat_id' => $chat_id,
+		]);
+	}
+
+	# Use this method to create an additional invite link for a chat. The bot mustbe an administrator in the chat for this to work and must have the appropriateadmin rights. The link can be revoked using the method revokeChatInviteLink.Returns the new invite link as ChatInviteLink object.
+	public function createChatInviteLink ($chat_id, $expire_date=null, $member_limit=null) {
+		return $this->bot('createChatInviteLink', [
+			'chat_id' => $chat_id,
+			'expire_date' => $expire_date,
+			'member_limit' => $member_limit,
+		]);
+	}
+
+	# Use this method to edit a non-primary invite link created by the bot. The botmust be an administrator in the chat for this to work and must have theappropriate admin rights. Returns the edited invite link as a ChatInviteLinkobject.
+	public function editChatInviteLink ($chat_id, $invite_link, $expire_date=null, $member_limit=null) {
+		return $this->bot('editChatInviteLink', [
+			'chat_id' => $chat_id,
+			'invite_link' => $invite_link,
+			'expire_date' => $expire_date,
+			'member_limit' => $member_limit,
+		]);
+	}
+
+	# Use this method to revoke an invite link created by the bot. If the primarylink is revoked, a new link is automatically generated. The bot must be anadministrator in the chat for this to work and must have the appropriate adminrights. Returns the revoked invite link as ChatInviteLink object.
+	public function revokeChatInviteLink ($chat_id, $invite_link) {
+		return $this->bot('revokeChatInviteLink', [
+			'chat_id' => $chat_id,
+			'invite_link' => $invite_link,
 		]);
 	}
 
@@ -719,16 +749,18 @@ class botlib {
 	}
 
 	# Use this method to send invoices. On success, the sent Message is returned.
-	public function sendInvoice ($chat_id, $title, $description, $payload, $provider_token, $start_parameter, $currency, $prices, $provider_data=null, $photo_url=null, $photo_size=null, $photo_width=null, $photo_height=null, $need_name=null, $need_phone_number=null, $need_email=null, $need_shipping_address=null, $send_phone_number_to_provider=null, $send_email_to_provider=null, $is_flexible=null, $disable_notification=null, $reply_to_message_id=null, $allow_sending_without_reply=null, $reply_markup=null) {
+	public function sendInvoice ($chat_id, $title, $description, $payload, $provider_token, $currency, $prices, $max_tip_amount=null, $suggested_tip_amounts=null, $start_parameter=null, $provider_data=null, $photo_url=null, $photo_size=null, $photo_width=null, $photo_height=null, $need_name=null, $need_phone_number=null, $need_email=null, $need_shipping_address=null, $send_phone_number_to_provider=null, $send_email_to_provider=null, $is_flexible=null, $disable_notification=null, $reply_to_message_id=null, $allow_sending_without_reply=null, $reply_markup=null) {
 		return $this->bot('sendInvoice', [
 			'chat_id' => $chat_id,
 			'title' => $title,
 			'description' => $description,
 			'payload' => $payload,
 			'provider_token' => $provider_token,
-			'start_parameter' => $start_parameter,
 			'currency' => $currency,
 			'prices' => $prices,
+			'max_tip_amount' => $max_tip_amount,
+			'suggested_tip_amounts' => $suggested_tip_amounts,
+			'start_parameter' => $start_parameter,
 			'provider_data' => $provider_data,
 			'photo_url' => $photo_url,
 			'photo_size' => $photo_size,
