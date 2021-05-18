@@ -1,12 +1,8 @@
-# Telegram
+# Botlib 0.1
 
-Some useful libraries, scripts, etc related to telegram
+A simple telegram bot library.
 
-## Botlib 0.1
-
-A simple telegram bot library,
-
-**Usage:**
+## Usage
 
 1. add `require_once("botlib.php");` to your file
 
@@ -16,7 +12,8 @@ A simple telegram bot library,
 
 `$bot->method(data);` - method : name of the method , data : parameters
 
-**Example:**
+## Example
+**Send a message to 821349528:**
 ```
 <?php
 
@@ -27,6 +24,6 @@ $bot = new botlib("14335...:AAGXqkM...");
 $bot->sendMessage(821349528,"This is a test from botlib 👋");
 ```
 
-**Code Examples:**
+## Code Examples
 
 * filetourl : Send files and recieve direct links [source code](examples/filetourl.php)
